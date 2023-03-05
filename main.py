@@ -8,6 +8,8 @@ melbourne_data.describe()
 ## target (y)
 ## features (x)
 ## define the model
+## Print the model
+## or make model validation
 
 #set the target for the ML model
 y = melbourne_data.Price
@@ -24,3 +26,32 @@ from sklearn.tree import DecisionTreeRegressor
 melbourne_model = DecisionTreeRegressor(random_state=1)
 
 melbourne_model.fit(x, y)
+
+
+## the pridictions for the first 5 houses, these are the first 5 houses:
+print(x.head())
+# these are the predictions for the prices
+print(melbourne_model.predict(x.head()))
+
+## model validation
+from sklearn.metrics import mean_absolute_error
+
+predicted_home_prices = melbourne_model.predict(x)
+mean_absolute_error(y, predicted_home_prices) 
+
+from sklearn.model_selection import train_test_split
+
+#split the data with random state so that it is the same every time
+train_x, val_x, train_y, val_y = train_test_split(x, y, random_state = 0)
+
+#define the model type again
+melbourne_model = DecisionTreeRegressor()
+
+#fit the model
+melbourne_model.fit(train_x, train_y)
+
+val_predictions = melbourne_model.predict(val_x)
+print(mean_absolute_error(val_y, val_predictions)) # this is the is the out of sample error - is is around $250,000 in error
+
+## now we have to try models that are better, more accurate
+## Overfitting and Underfitting
