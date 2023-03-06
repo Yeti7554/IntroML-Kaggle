@@ -55,3 +55,18 @@ print(mean_absolute_error(val_y, val_predictions)) # this is the is the out of s
 
 ## now we have to try models that are better, more accurate
 ## Overfitting and Underfitting
+
+## write a function to get mae
+def get_mae(max_leaf_nodes, train_x, val_x, train_y, val_y):
+    model = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=0)
+    model.fit(train_x, train_y)
+    preds_val = model.predict(val_x)
+    mae = mean_absolute_error(val_y, preds_val)
+    return(mae)
+
+# compare MAE with differing values of max_leaf_nodes
+for max_leaf_nodes in [5, 50, 500, 5000]:
+    my_mae = get_mae(max_leaf_nodes, train_x, val_x, train_y, val_y)
+    print("Max leaf nodes: %d  \t\t Mean Absolute Error:  %d" %(max_leaf_nodes, my_mae))
+    # in this case you'll see that 500 is the optimal number of leaves
+# When you find the best decision tree you can use model = decisiontreeregressor(max_leaf_nodes = --, random_state= --)
