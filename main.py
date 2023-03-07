@@ -70,3 +70,14 @@ for max_leaf_nodes in [5, 50, 500, 5000]:
     print("Max leaf nodes: %d  \t\t Mean Absolute Error:  %d" %(max_leaf_nodes, my_mae))
     # in this case you'll see that 500 is the optimal number of leaves
 # When you find the best decision tree you can use model = decisiontreeregressor(max_leaf_nodes = --, random_state= --)
+
+## Random Forrests
+# Similar to Decision trees but uses many different trees instead and then averaging 
+
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+
+forest_model = RandomForestRegressor(random_state=1)
+forest_model.fit(train_x, train_y)
+melb_preds = forest_model.predict(val_x)
+print(mean_absolute_error(val_y, melb_preds)) #Note that this is lower than before
